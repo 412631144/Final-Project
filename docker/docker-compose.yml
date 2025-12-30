@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mern-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_DATABASE: mern_db
+    volumes:
+      - ./mongo-data:/data/db
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    networks:
+      - mern-network
+
+  server:
+    build:
+      context: ../server
+      dockerfile: Dockerfile
+    container_name: mern-server
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGO_URI=mongodb://root:example@mongo:27017/mern_db?authSource=admin
+    depends_on:
+      - mongo
+    networks:
+      - mern-network
+
+networks:
+  mern-network:
+    driver: bridge
