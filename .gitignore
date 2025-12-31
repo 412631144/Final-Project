@@ -1,0 +1,39 @@
+# ------------------------------
+# 依賴套件 (Dependencies)
+# ------------------------------
+# 不論是 server 或 client 的 node_modules 都不應該上傳，因為它們太大了
+# 別人只需要透過 package.json 執行 npm install 就能安裝回來
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# ------------------------------
+# 環境變數與安全性 (Security)
+# ------------------------------
+# [非常重要] 絕對不要上傳 .env 檔，裡面通常包含資料庫密碼或 API Key
+# .env
+# .env.local
+# .env.*.local
+
+# ------------------------------
+# 系統與 IDE 產生的檔案 (System & IDE)
+# ------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ------------------------------
+# 前端編譯產出 (Build Output)
+# ------------------------------
+# 如果你的 client 有執行 build 指令，產生的資料夾通常不需要上傳
+dist/
+build/
+coverage/
+
+# ------------------------------
+# 資料庫 (Database)
+# ------------------------------
+# 如果你有本機測試用的 mongoDB 資料夾掛載，不要上傳
+# 假設你在 docker-compose 裡面把資料掛載在 ./mongo-data 之類的地方
+mongo-data/
