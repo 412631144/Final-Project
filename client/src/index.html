@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>早安長輩圖 - 社群互動版</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="showFilteredList('all')">
+                <i class="fas me-2"></i>早安長輩圖
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item auth-hidden" id="nav-guest">
+                        <button class="btn btn-outline-danger me-2 rounded-pill px-4" data-bs-toggle="modal"
+                            data-bs-target="#loginModal">登入</button>
+                        <button class="btn btn-danger rounded-pill px-4"
+                            style="background-color: var(--primary-color); border: none;" data-bs-toggle="modal"
+                            data-bs-target="#registerModal">註冊</button>
+                    </li>
+
+                    <li class="nav-item dropdown auth-visible d-none" id="nav-user">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://i.pravatar.cc/150?img=5" alt="Avatar" class="user-avatar me-2"
+                                id="user-avatar-img">
+                            <span class="fw-bold text-secondary" id="user-name-display">使用者</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow border-0" style="border-radius: 10px;">
+                            <li>
+                                <h6 class="dropdown-header">我的圖庫</h6>
+                            </li>
+                            <li><a class="dropdown-item" href="#" onclick="showFilteredList('my-creations')"><i
+                                        class="fas fa-image me-2 text-primary"></i>我的作品</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="showFilteredList('collections')"><i
+                                        class="fas fa-bookmark me-2 text-warning"></i>我的收藏</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="showFilteredList('likes')"><i
+                                        class="fas fa-heart me-2 text-danger"></i>按讚紀錄</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="#" onclick="logout()"><i
+                                        class="fas fa-sign-out-alt me-2"></i>登出</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Banner -->
+    <div class="hero-banner mb-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1 class="fw-bold display-5">傳遞溫暖，從一張圖開始</h1>
+                    <p class="lead mb-0 opacity-75">分享早安、晚安與節慶祝福，讓關心零距離。</p>
+                </div>
+                <div class="col-md-4 text-end d-none d-md-block">
+                    <i class="fas fa-heart fa-5x opacity-50"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <!-- 左側側邊欄 (Sidebar) -->
+            <div class="col-lg-3 mb-4">
+                <div class="sticky-top" style="top: 90px; z-index: 900;">
+
+                    <div class="sidebar-card p-3 mb-3">
+                        <h5 class="fw-bold text-secondary mb-3 px-2"><i class="fas fa-filter me-2"></i>分類瀏覽</h5>
+                        <div class="list-group sidebar-menu list-group-flush">
+                            <a onclick="showFilteredList('all')" class="list-group-item active rounded mb-1">
+                                全部圖片
+                            </a>
+                            <a onclick="filterCategory('早安')" class="list-group-item rounded mb-1">
+                                早安問候
+                            </a>
+                            <a onclick="filterCategory('晚安')" class="list-group-item rounded mb-1">
+                                晚安好夢
+                            </a>
+                            <a onclick="filterCategory('節慶')" class="list-group-item rounded mb-1">
+                                節慶祝福
+                            </a>
+                            <a onclick="filterCategory('勸世')" class="list-group-item rounded mb-1">
+                                勸世金句
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info shadow-sm border-0 rounded-3" id="guest-alert">
+                        <small><i class="fas fa-info-circle me-1"></i>登入後即可建立專屬圖庫！</small>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 右側內容區 (Main Content) -->
+            <div class="col-lg-9">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h3 class="text-dark fw-bold d-inline-block me-2" id="page-title">精選長輩圖</h3>
+                        <button class="btn btn-sm btn-outline-secondary rounded-pill d-none px-3" id="btn-back-all"
+                            onclick="showFilteredList('all')">
+                            <i class="fas fa-arrow-left me-1"></i>返回全部
+                        </button>
+                    </div>
+                    <span class="badge bg-secondary rounded-pill fw-normal px-3 py-2" id="total-count">Loading...</span>
+                </div>
+
+                <div class="masonry-grid" id="greeting-list">
+                    <!-- JS 生成內容 -->
+                    <div class="d-flex justify-content-center w-100 p-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 浮動按鈕 -->
+    <div class="btn-floating" id="addBtn" data-bs-toggle="modal" data-bs-target="#editorModal"
+        onclick="prepareCreateMode()" title="製作新圖">
+        <i class="fas fa-plus"></i>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">會員登入</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form onsubmit="event.preventDefault()">
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control rounded-3" id="floatingInput"
+                                placeholder="name@example.com">
+                            <label for="floatingInput">帳號 / Email</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control rounded-3" id="floatingPassword"
+                                placeholder="Password">
+                            <label for="floatingPassword">密碼</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold"
+                            style="background-color: var(--primary-color); border: none;"
+                            onclick="performLogin()">立即登入</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Editor Modal -->
+    <div class="modal fade" id="editorModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold text-primary" id="modalTitle">新增長輩圖</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form id="greetingForm" onsubmit="event.preventDefault()">
+                        <input type="hidden" id="editId">
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold text-secondary">標題</label>
+                                <input type="text" class="form-control rounded-3" id="inputTitle"
+                                    placeholder="例如：早安，祝您順心">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold text-secondary">分類</label>
+                                <select class="form-select rounded-3" id="inputCategory">
+                                    <option value="早安">早安</option>
+                                    <option value="晚安">晚安</option>
+                                    <option value="節慶">節慶</option>
+                                    <option value="勸世">勸世</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary">圖片網址</label>
+                            <input type="url" class="form-control rounded-3" id="inputImageUrl"
+                                placeholder="請輸入圖片 URL...">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold text-secondary">內文描述</label>
+                            <textarea class="form-control rounded-3" id="inputDescription" rows="3"
+                                placeholder="寫些溫暖的話..."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0 pe-4 pb-4">
+                    <button type="button" class="btn btn-light rounded-pill px-4" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary rounded-pill px-4"
+                        style="background-color: var(--primary-color); border: none;" onclick="saveData()">儲存發布</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg rounded-4">
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold">註冊會員</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <form onsubmit="event.preventDefault()">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control rounded-3" id="regName" placeholder="您的暱稱">
+                            <label for="regName">暱稱</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control rounded-3" id="regEmail"
+                                placeholder="name@example.com">
+                            <label for="regEmail">Email 帳號</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control rounded-3" id="regPass" placeholder="Password">
+                            <label for="regPass">設定密碼</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 py-2 rounded-3 fw-bold"
+                            style="background-color: var(--primary-color); border: none;"
+                            onclick="performRegister()">立即註冊</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

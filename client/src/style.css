@@ -1,0 +1,187 @@
+:root {
+    --primary-color: #d63384;
+    --primary-hover: #b02a6b;
+    --bg-light: #fff0f5;
+}
+
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', "Microsoft JhengHei", sans-serif;
+    color: #444;
+}
+
+/* Navbar 美化 */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+}
+
+.navbar-brand {
+    font-weight: 800;
+    color: var(--primary-color) !important;
+    letter-spacing: 1px;
+}
+
+/* 頂部 Hero Banner */
+.hero-banner {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+    padding: 3rem 0;
+    margin-top: 50px;
+    border-radius: 0 0 20px 20px;
+    box-shadow: 0 4px 15px rgba(214, 51, 132, 0.15);
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 側邊欄樣式 */
+.sidebar-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.sidebar-menu .list-group-item {
+    border: none;
+    padding: 12px 20px;
+    color: #666;
+    transition: all 0.2s;
+    cursor: pointer;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-menu .list-group-item:hover,
+.sidebar-menu .list-group-item.active {
+    background-color: var(--bg-light);
+    color: var(--primary-color);
+    border-left-color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* Masonry 瀑布流佈局核心 CSS */
+.masonry-grid {
+    column-count: 1;
+    column-gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+    .masonry-grid {
+        column-count: 2;
+    }
+}
+
+@media (min-width: 992px) {
+    .masonry-grid {
+        column-count: 3;
+    }
+}
+
+.masonry-item {
+    break-inside: avoid;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    width: 100%;
+}
+
+/* 卡片樣式 */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease;
+    background: white;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(214, 51, 132, 0.15);
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.card-category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--primary-color);
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 2;
+}
+
+/* 浮動按鈕優化 */
+.btn-floating {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    border-radius: 50%;
+    width: 65px;
+    height: 65px;
+    font-size: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(214, 51, 132, 0.4);
+    z-index: 100;
+    background: linear-gradient(45deg, #d63384, #ff6b6b);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.btn-floating:hover {
+    transform: rotate(90deg) scale(1.1);
+    color: white;
+}
+
+/* 頭像與互動 */
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+}
+
+.action-btn {
+    cursor: pointer;
+    transition: transform 0.2s;
+    font-size: 1.2rem;
+    padding: 5px;
+}
+
+.action-btn:hover {
+    transform: scale(1.25);
+}
+
+.liked {
+    color: #dc3545 !important;
+}
+
+.collected {
+    color: #ffc107 !important;
+}
+
+.text-action-default {
+    color: #ced4da;
+}
+
+.text-action-default:hover {
+    color: #adb5bd;
+}
+
+@media (max-width: 991px) {
+    .hero-banner {
+        text-align: center;
+        border-radius: 0;
+    }
+}
