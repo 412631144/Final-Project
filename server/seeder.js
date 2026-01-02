@@ -30,10 +30,8 @@ const seedData = async () => {
                 password: hashedPassword,
                 role: 'admin'
             });
-            console.log('✅ Admin user created (admin@example.com / admin)');
         } else {
             adminUser = adminExists;
-            console.log('ℹ️ Admin user already exists');
         }
 
         // 2. Seed Posts
@@ -45,13 +43,11 @@ const seedData = async () => {
                 creatorName: adminUser.name
             }));
             await Post.insertMany(samplePosts);
-            console.log('✅ Sample posts created');
         } else {
-            console.log('ℹ️ Posts already exist or Admin user missing');
         }
 
     } catch (error) {
-        console.error(`❌ Seeding Error: ${error.message}`);
+        console.error(`Seeding Error: ${error.message}`);
     }
 };
 
