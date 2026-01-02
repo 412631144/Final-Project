@@ -55,7 +55,7 @@ async function loginApi(email, password) {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || 'Login failed');
+            throw new Error(data.message || '登入失敗');
         }
 
         return data; // contains user info and token
@@ -76,7 +76,7 @@ async function registerApi(name, email, password) {
         const data = await response.json();
 
         if (!response.ok) {
-            throw new Error(data.message || 'Registration failed');
+            throw new Error(data.message || '註冊失敗');
         }
 
         return data;
@@ -87,7 +87,7 @@ async function registerApi(name, email, password) {
 }
 
 async function createPostApi(newPost) {
-    if (!currentUser) return alert('Please login first');
+    if (!currentUser) return alert('請先登入');
     try {
         const response = await fetch(API_URL, {
             method: 'POST',
@@ -106,7 +106,7 @@ async function createPostApi(newPost) {
 }
 
 async function updatePostApi(id, updatedPost) {
-    if (!currentUser) return alert('Please login first');
+    if (!currentUser) return alert('請先登入');
     try {
         const response = await fetch(`${API_URL}/${id}`, {
             method: 'PUT',
@@ -125,7 +125,7 @@ async function updatePostApi(id, updatedPost) {
 }
 
 async function deletePostApi(id) {
-    if (!currentUser) return alert('Please login first');
+    if (!currentUser) return alert('請先登入');
     try {
         const response = await fetch(`${API_URL}/${id}`, {
             method: 'DELETE',
