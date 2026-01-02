@@ -29,10 +29,10 @@ async function fetchPosts() {
 
         // Fix image paths
         postsData = postsData.map(post => {
-            if (post.imageUrl.includes('public/images/')) {
+            if (post.imageUrl && post.imageUrl.startsWith('/public/')) {
                 return {
                     ...post,
-                    imageUrl: `${APP_URL_PREFIX}${post.imageUrl}`
+                    imageUrl: `${APP_URL_PREFIX.replace(/\/$/, '')}${post.imageUrl}`
                 };
             }
             return post;
