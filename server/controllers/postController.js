@@ -31,7 +31,7 @@ const createPost = asyncHandler(async (req, res) => {
 
     if (!title || !imageUrl || !category) {
         res.status(400);
-        throw new Error('Please include all required fields');
+        throw new Error('請填寫所有必填欄位');
     }
 
     const post = await Post.create({
@@ -54,7 +54,7 @@ const deletePost = asyncHandler(async (req, res) => {
 
     if (!post) {
         res.status(404);
-        throw new Error('Post not found');
+        throw new Error('找不到該文章');
     }
 
     // Check user (only creator or admin can delete)
@@ -65,7 +65,7 @@ const deletePost = asyncHandler(async (req, res) => {
 
     if (!isCreator && !isAdmin) {
         res.status(401);
-        throw new Error('User not authorized');
+        throw new Error('您沒有權限執行此操作');
     }
 
     await post.deleteOne();
@@ -81,7 +81,7 @@ const updatePost = asyncHandler(async (req, res) => {
 
     if (!post) {
         res.status(404);
-        throw new Error('Post not found');
+        throw new Error('找不到該文章');
     }
 
     // Check user (only creator or admin can update)
@@ -90,7 +90,7 @@ const updatePost = asyncHandler(async (req, res) => {
 
     if (!isCreator && !isAdmin) {
         res.status(401);
-        throw new Error('User not authorized');
+        throw new Error('您沒有權限執行此操作');
     }
 
     // Prevent changing the creator
@@ -113,7 +113,7 @@ const likePost = asyncHandler(async (req, res) => {
 
     if (!post) {
         res.status(404);
-        throw new Error('Post not found');
+        throw new Error('找不到該文章');
     }
 
     let isLiked = false;
@@ -149,7 +149,7 @@ const collectPost = asyncHandler(async (req, res) => {
 
     if (!post) {
         res.status(404);
-        throw new Error('Post not found');
+        throw new Error('找不到該文章');
     }
 
     // Initialize if undefined (for old records)

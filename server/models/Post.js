@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const postSchema = mongoose.Schema({
     title: {
         type: String,
-        required: [true, 'Please add a title'],
+        required: [true, '請輸入標題'],
     },
     imageUrl: {
         type: String,
-        required: [true, 'Please add an image URL'],
+        required: [true, '請輸入圖片網址'],
     },
     category: {
         type: String,
-        required: [true, 'Please select a category'],
+        required: [true, '請選擇分類'],
         enum: ['早安', '晚安', '節慶', '勸世', '其他'],
         default: '其他'
     },

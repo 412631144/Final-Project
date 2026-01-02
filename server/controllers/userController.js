@@ -11,7 +11,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (!name || !email || !password) {
         res.status(400);
-        throw new Error('Please add all fields');
+        throw new Error('請填寫所有欄位');
     }
 
     // Check if user exists
@@ -19,7 +19,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
     if (userExists) {
         res.status(400);
-        throw new Error('User already exists');
+        throw new Error('使用者已存在');
     }
 
     // Hash password
@@ -43,7 +43,7 @@ const registerUser = asyncHandler(async (req, res) => {
         });
     } else {
         res.status(400);
-        throw new Error('Invalid user data');
+        throw new Error('無效的使用者資料');
     }
 });
 
@@ -66,7 +66,7 @@ const loginUser = asyncHandler(async (req, res) => {
         });
     } else {
         res.status(400);
-        throw new Error('Invalid credentials');
+        throw new Error('帳號或密碼錯誤');
     }
 });
 
