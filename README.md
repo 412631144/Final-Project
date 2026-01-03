@@ -88,4 +88,8 @@
     *   開啟 `client/src/index.html` 即可開始使用。
     *   使用管理員帳號登入即可測試「編輯」與「刪除」他人貼文的權限。
 
+
+
+## 5. 影片連結
+- [專題操作示範影片（YouTube）](https://youtu.be/K9KMhY4F7mA)
 ---
