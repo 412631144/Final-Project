@@ -1,0 +1,49 @@
+@baseUrl = http://localhost:5000/api
+@authToken = {{login.response.body.token}}
+
+### 1. 測試 API 是否存活 (Root)
+GET http://localhost:5000/
+
+### 2. 使用者註冊 (Register)
+POST {{baseUrl}}/users
+Content-Type: application/json
+
+{
+    "name": "New User",
+    "email": "newuser@example.com",
+    "password": "password123"
+}
+
+### 3. 使用者登入 (Login) - 取得 Token
+# @name login
+POST {{baseUrl}}/users/login
+Content-Type: application/json
+
+{
+    "email": "admin@example.com",
+    "password": "admin"
+}
+
+### 4. 取得我的資訊 (Get Me) - 需 Token
+GET {{baseUrl}}/users/me
+Authorization: Bearer {{authToken}}
+
+### 5. 取得所有貼文 (Get All Posts)
+GET {{baseUrl}}/posts
+
+### 6. 新增貼文 (Create Post) - 需 Token
+POST {{baseUrl}}/posts
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "title": "測試貼文",
+    "imageUrl": "https://www.toy-people.com/?p=49591",
+    "category": "其他",
+    "description": "這是透過 test.http 發送的測試貼文"
+}
+
+### 7. 刪除貼文 (需替換 ID)
+# 請將 :id 替換為實際的 Post ID
+# DELETE {{baseUrl}}/posts/:id
+# Authorization: Bearer {{authToken}}
